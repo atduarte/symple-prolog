@@ -21,7 +21,7 @@
 \Large{Programação em Lógica}\linebreak
 }
 
-\author{\textbf{Grupo 06:}\\ André Duarte - 201100766 \\ João Carlos Santos - 201106760 \\\linebreak\linebreak \\
+\author{\textbf{Grupo 41:}\\ André Duarte - 201100766 \\ João Carlos Santos - 201106760 \\\linebreak\linebreak \\
  \\ Faculdade de Engenharia da Universidade do Porto \\ Rua Roberto Frias, s\/n, 4200-465 Porto, Portugal \linebreak\linebreak\linebreak
 \linebreak\linebreak\vspace{1cm}}
 %\date{Junho de 2007}
@@ -34,8 +34,9 @@
 \newpage
 
 \section*{Resumo}
-Neste trabalho pretende-se implementar um algoritmo para a simulação do jogo de tabuleiro "Symple".
+O trabalho consistirá no desenvolvimento do jogo de tabuleiro "Symple" utilizando ProLog como linguagem de implementação. Posteriormente, o projeto terá ainda visualização gráfica em 3D recorrendo a OpenGL e C++.
 
+Quando terminado o trabalho permitirá a dois jogadores humanos competirem entre si no mesmo computador.
 
 %Descrever muito sumariamente (1-2 parágrafos) o trabalho que está a ser reportado.
 
@@ -46,10 +47,17 @@ Neste trabalho pretende-se implementar um algoritmo para a simulação do jogo d
 %************************************************************************************************
 
 \section{Introdução}
-Descrever os objectivos e motivação do trabalho.
+Temos por objetivo adquirir conhecimentos e sensibilidade na área de linguagens de Programação em Lógica (neste caso Prolog) deste forma desenvolvendo competências e raciocínios que de outra forma não apreenderíamos. Será tambem adquirido algum tacto no mundo do desenvolvimento de jogos.
 
-Todas as figuras devem ser referidas no texto. %\ref{fig:codigoFigura}
+Este jogo foi por nós escolhido principalmente devido à sua peculiaridade, pois o seu fluxo de jogo é bastante original. Apesar de aparentar ser bastante simples, o jogo apresenta um conjunto de regras algo extenso e baseia-se primariamente em princípios matemáticos. Apresentam-se então as seguintes características:
+\begin{itemize}
+\item Só existem dois tipos de jogadas possíveis (crescer e criar novo grupo).
+\item As peças de jogadores diferentes não interagem entre si, apenas bloqueiam posicionamento no lugar onde estão inseridas.
+\item Após o posicionamento as peças não podem mudar de sítio.
+\item O jogo acaba quando o tabuleiro se encontra preenchido.
+\end{itemize}
 
+Nota: Serão dadas mais informações sobre o fluxo do jogo na secção "O Symple".
 
 %Exemplo de código para inserção de figuras
 %\begin{figure}[h!]
@@ -63,48 +71,18 @@ Todas as figuras devem ser referidas no texto. %\ref{fig:codigoFigura}
 %\end{center}
 %\end{figure}
 
-
-\textbf{Info útil}:
-
-Devem ser incluídas referências bibliográficas correctas e completas (consultar os docentes em caso de dúvida). Páginas da wikipedia não são consideradas referências válidas \cite{CodigoSite, CodigoLivro}.
-
-\textit{Para escrever em itálico}
-
-\textbf{Para escrever em negrito}
-
-Para escrever em letra normal
-
-``Para escrever texto entre aspas''
-
-Para fazer parágrafo, deixar uma linha em branco.
-
-Como fazer bullet points:
-
-\begin{itemize}
-\item Item1
-\item Item2
-\end{itemize}
-
-Como enumerar itens:
-
-\begin{enumerate}
-\item Item 1
-\end{enumerate}
-
-\begin{quote}``Isto é uma citação''\end{quote}
-
 \section{O Symple}
 Symple é um jogo de estratégia abstrato em que dois jogadores competem para conseguir ocupar a maior área do tabuleiro com o menor número de grupos possível.
 
-As jogadas são feitas alternadamente entre dois jogadores, de cor Branco e Preto. O jogador Branco é o primeiro a jogar e joga com as peças brancas. O jogador Preto joga com as peças pretas.
+As jogadas são feitas alternadamente entre dois jogadores, de cor Branco e Preto. O jogador 1 é o primeiro a jogar e joga com as peças brancas. O jogador 2 joga com as peças pretas.
 
 No seu turno, um jogador pode escolher entre as seguintes jogadas:
 \begin{enumerate}
-\item Colocar um pedra no tabuleiro num sítio sem contacto com as outras pedras desta forma criando um novo grupo
+\item Colocar uma pedra no tabuleiro num sítio sem contacto com as outras pedras desta forma criando um novo grupo
 \item Fazer crescer todos os grupos com uma pedra. Pedras que toquem em ambos os grupos contam como fazer crescer ambos os grupos. No entanto, se dois grupos crescem em uma pedra e apenas estas se tocam entre os dois grupos, a jogada é legal.
 \end{enumerate}
 
-Para equilibrar o jogo existe uma regra extra: se nenhum jogador tiver crescido os seus grupos, o Preto pode crescer todos os seus grupos e criar um novo grupo.
+Para equilibrar o jogo existe uma regra extra: se nenhum jogador tiver crescido os seus grupos, o jogador 2, que joga com as peças pretas, pode, na mesma jogada, crescer todos os seus grupos e criar um novo grupo.
 
 O jogo acaba quando o tabuleiro é preenchido. A pontuação é determinada pelo número de pedras que cada jogador tem no tabuleiro menos 'P' vezes o número de grupos que o jogador tem, em que 'P' é um número par maior ou igual a 4. Com uma penalidade par e um tamanho de tabuleiro ímpar não são possíveis empates.
 
@@ -119,7 +97,7 @@ Elencar os movimentos (tipos de jogadas) possíveis e definir os cabeçalhos dos
 
 \section{Conclusões e Perspectivas de Desenvolvimento}
 Que conclui da análise do jogo e da pesquisa bibliográfica realizada? Como vai ser desenvolvido o trabalho? Que parte (\%) do trabalho estima que falta fazer?
-
+%test
 \clearpage
 \addcontentsline{toc}{section}{Bibliografia}
 \renewcommand\refname{Bibliografia}

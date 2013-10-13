@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.10.10)  10 OCT 2013 16:25
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.10.10)  12 OCT 2013 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -390,20 +390,19 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./feup.pdf>]
+Overfull \hbox (20.52744pt too wide) in paragraph at lines 37--38
+[]\OT1/cmr/m/n/10 O tra-balho con-si-s-tir^^Sa no de-sen-volvi-mento do jogo de
+ tab-uleiro "Sym-ple"utilizando
+ []
 
-LaTeX Warning: Citation `CodigoSite' on page 2 undefined on input line 69.
-
-
-LaTeX Warning: Citation `CodigoLivro' on page 2 undefined on input line 69.
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 84.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 54.
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 54.
  [2]
-Overfull \hbox (2.75801pt too wide) in paragraph at lines 120--120
+Overfull \hbox (2.75801pt too wide) in paragraph at lines 98--98
 []\OT1/cmr/bx/n/14.4 Conclus~oes e Per-spec-ti-vas de De-sen-volvi-mento 
  []
 
@@ -411,29 +410,23 @@ Overfull \hbox (2.75801pt too wide) in paragraph at lines 120--120
 No file template.bbl.
 [4
 
-] (./template.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+] (./template.aux) ) 
 Here is how much of TeX's memory you used:
- 2093 strings out of 495059
- 28226 string characters out of 3182029
+ 2090 strings out of 495059
+ 28199 string characters out of 3182029
  86768 words of memory out of 3000000
- 5249 multiletter control sequences out of 15000+200000
- 8847 words of font info for 31 fonts, out of 3000000 for 9000
+ 5248 multiletter control sequences out of 15000+200000
+ 8193 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  37i,7n,24p,415b,245s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template.pdf (4 pages, 148627 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on template.pdf (4 pages, 126148 bytes).
 PDF statistics:
- 51 PDF objects out of 1000 (max. 8388607)
- 30 compressed objects within 1 object stream
+ 43 PDF objects out of 1000 (max. 8388607)
+ 24 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
