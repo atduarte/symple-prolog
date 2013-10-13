@@ -18,36 +18,38 @@ fillList( [X|Xs] ) :-
 % Print
 
 printBoard(B) :-
-	write('['), 
-	printBoardAux(B),
-	write(']').
+	printBoardAux(B).
 
 printBoardAux([]).
 printBoardAux([H]) :- 
 	printList(H).
 printBoardAux([X | Y]) :-
 	printList(X),
-	write(','),
-	nl,
 	write(' '),
+	nl,
 	printBoardAux(Y).
 
-printList(L) :-
-	write('['), 
-	printListAux(L),
-	write(']').
+printList(L) :- 
+	printListAux(L).
 
 printListAux([]).
-printListAux([H]):- write(H).
+printListAux([H]) :- write(H).
 printListAux([X | Y]) :-
    write( X ),
-   write(' ,'),
+   write(' '),
    printListAux(Y).
 
 % Play
 
-play :- 
+playSymple :- 
 	write('Choose board size: '),
 	read(S),
+	playSympleAux(S).
+
+playSymple(S) :- 
+	playSympleAux(S).
+
+playSympleAux(S) :-
 	createBoard(B, S),
 	printBoard(B).
+
