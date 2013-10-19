@@ -1,8 +1,8 @@
 % Create
 
-createBoard(L, S) :-
-	length( L, S ),
-	createLists(L,S).
+createBoard(B, S) :-
+	length( B, S ),
+	createLists(B,S).
 
 createLists([], S).
 createLists([H|T], S) :-
@@ -18,25 +18,42 @@ fillList( [X|Xs] ) :-
 % Print
 
 printBoard(B) :-
-	printBoardAux(B).
-
-printBoardAux([]).
-printBoardAux([H]) :- 
-	printList(H).
-printBoardAux([X | Y]) :-
-	printList(X),
+	N1 is 1,
+	N2 is 1,
 	write(' '),
+	printBoardTop(B, N1),
 	nl,
-	printBoardAux(Y).
+	printBoardAux(B, N2).
+
+printBoardTop([], N).
+printBoardTop([X | Y], N) :-
+	write(' '),
+	write(N),
+	N1 is N+1,
+	%N is N1+1,
+	printBoardTop(Y, N1).
+
+
+printBoardAux([], N).
+printBoardAux([H], N) :- 
+	write(N),
+	printList(H).
+printBoardAux([X | Y], N) :-
+	write(N),
+	printList(X),
+	nl,
+	N1 is N+1,
+	printBoardAux(Y, N1).
+
 
 printList(L) :- 
 	printListAux(L).
 
 printListAux([]).
-printListAux([H]) :- write(H).
+printListAux([H]) :- write(' '), write(H).
 printListAux([X | Y]) :-
-   write( X ),
    write(' '),
+   write( X ),
    printListAux(Y).
 
 % Play
