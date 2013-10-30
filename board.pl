@@ -69,9 +69,9 @@ playSymple(S) :-
 playSympleAux(S) :-
 	createBoard(B, S),
 	printBoard(B),
-	playPlayer1().
+	readPlayer1.
 
-readPlayer1() :-
+readPlayer1 :-
 	write('PLAYER 1, Your turn! Choose move type (group/grow): '),
 	read(P),
 	playPlayer1(P).
@@ -84,46 +84,46 @@ playPlayer1('grow') :-
 	growPlayer1(),
 	checkGameEnded().
 
-groupPlayer1() :-
+groupPlayer1 :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
 	checkGameEnded().
-	readPlayer2().
+	readPlayer2.
 
-groupPlayer1() :-
+groupPlayer1 :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
 	checkGameEnded().
-	readPlayer2().
+	readPlayer2.
 
-readPlayer2() :-
+readPlayer2 :-
 	write('PLAYER 2, Your turn! Choose move type (group/grow): '),
 	read(P),
 	playPlayer2(P).
 
 playPlayer2('group') :-
-	groupPlayer2(),
-	checkGameEnded().
+	groupPlayer2,
+	checkGameEnded.
 
 playPlayer2('grow') :-
-	growPlayer2(),
-	checkGameEnded().
+	growPlayer2,
+	checkGameEnded
 
-groupPlayer2() :-
+groupPlayer2 :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
-	checkGameEnded(),
-	readPlayer1().
+	checkGameEnded,
+	readPlayer1.
 
-groupPlayer2() :-
+groupPlayer2 :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
-	checkGameEnded(),
-	readPlayer1().
+	checkGameEnded,
+	readPlayer1.
 
 
 
