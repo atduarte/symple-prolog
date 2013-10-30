@@ -77,21 +77,25 @@ readPlayer1() :-
 	playPlayer1(P).
 
 playPlayer1('group') :-
-	groupPlayer1().
+	groupPlayer1(),
+	checkGameEnded().
 
 playPlayer1('grow') :-
-	growPlayer1().
+	growPlayer1(),
+	checkGameEnded().
 
 groupPlayer1() :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
+	checkGameEnded().
 	readPlayer2().
 
 groupPlayer1() :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
+	checkGameEnded().
 	readPlayer2().
 
 readPlayer2() :-
@@ -100,21 +104,25 @@ readPlayer2() :-
 	playPlayer2(P).
 
 playPlayer2('group') :-
-	groupPlayer2().
+	groupPlayer2(),
+	checkGameEnded().
 
 playPlayer2('grow') :-
-	growPlayer2().
+	growPlayer2(),
+	checkGameEnded().
 
 groupPlayer2() :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
+	checkGameEnded(),
 	readPlayer1().
 
 groupPlayer2() :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
+	checkGameEnded(),
 	readPlayer1().
 
 
