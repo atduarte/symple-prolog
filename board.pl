@@ -77,25 +77,25 @@ readPlayer1 :-
 	playPlayer1(P).
 
 playPlayer1('group') :-
-	groupPlayer1(),
-	checkGameEnded().
+	groupPlayer1,
+	checkGameEnded.
 
 playPlayer1('grow') :-
-	growPlayer1(),
-	checkGameEnded().
+	growPlayer1,
+	checkGameEnded.
 
 groupPlayer1 :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
-	checkGameEnded().
+	checkGameEnded,
 	readPlayer2.
 
 groupPlayer1 :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
-	checkGameEnded().
+	checkGameEnded,
 	readPlayer2.
 
 readPlayer2 :-
@@ -109,7 +109,7 @@ playPlayer2('group') :-
 
 playPlayer2('grow') :-
 	growPlayer2,
-	checkGameEnded
+	checkGameEnded.
 
 groupPlayer2 :-
 	% pergunta onde vai colocar a peça e tal
