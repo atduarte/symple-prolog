@@ -71,61 +71,65 @@ playSympleAux(S) :-
 	printBoard(B),
 	readPlayer1.
 
-readPlayer1 :-
+readPlayer(1) :-
 	write('PLAYER 1, Your turn! Choose move type (group/grow): '),
 	read(P),
 	playPlayer1(P).
 
-playPlayer1('group') :-
-	groupPlayer1,
-	checkGameEnded.
-
-playPlayer1('grow') :-
-	growPlayer1,
-	checkGameEnded.
-
-groupPlayer1 :-
-	% pergunta onde vai colocar a peça e tal
-	% verifica se vale
-	% se nao valer volta a ser chamada
-	checkGameEnded,
-	readPlayer2.
-
-groupPlayer1 :-
-	% pergunta onde vai colocar a peças recursivamente
-	% verifica se vale
-	% se nao valer volta a ser chamada
-	checkGameEnded,
-	readPlayer2.
-
-readPlayer2 :-
+readPlayer(2) :-
 	write('PLAYER 2, Your turn! Choose move type (group/grow): '),
 	read(P),
 	playPlayer2(P).
 
-playPlayer2('group') :-
-	groupPlayer2,
+playPlayer(1, 'group') :-
+	groupPlayer1,
 	checkGameEnded.
 
-playPlayer2('grow') :-
+playPlayer(1, 'grow') :-
+	growPlayer1,
+	checkGameEnded.
+
+playPlayer(2, 'group') :-
+	groupPlayer(2),
+	checkGameEnded.
+
+playPlayer(2, 'grow') :-
 	growPlayer2,
 	checkGameEnded.
 
-groupPlayer2 :-
+growPlayer(1) :-
 	% pergunta onde vai colocar a peça e tal
 	% verifica se vale
 	% se nao valer volta a ser chamada
 	checkGameEnded,
-	readPlayer1.
+	readPlayer(2).
 
-groupPlayer2 :-
+growPlayer(2) :-
+	% pergunta onde vai colocar a peça e tal
+	% verifica se vale
+	% se nao valer volta a ser chamada
+	checkGameEnded,
+	readPlayer(1).
+
+groupPlayer(1) :-
 	% pergunta onde vai colocar a peças recursivamente
 	% verifica se vale
 	% se nao valer volta a ser chamada
 	checkGameEnded,
-	readPlayer1.
+	readPlayer(2).
 
+groupPlayer(2) :-
+	% pergunta onde vai colocar a peças recursivamente
+	% verifica se vale
+	% se nao valer volta a ser chamada
+	checkGameEnded,
+	readPlayer(1).
 
+checkGameEnded :-
+	endGame.
+
+endGame :-
+	end.
 
 
 
