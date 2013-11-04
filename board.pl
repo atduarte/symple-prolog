@@ -7,66 +7,81 @@ createBoard(B, S) :-
 createLists([], S).
 createLists([H|T], S) :-
 	length( H, S ),
-   	fillList( H ),
+   	createPoint( H ),
    	createLists(T, S).
 	
-fillList( [] ).
-fillList( [X|Xs] ) :-
-    X is 0,
-    fillList( Xs ).
+createPoint( [] ).
+createPoint( [H|T] ) :-
+	length( H, 2 ),
+    fillPoint( H ),
+    createPoint( T ).
 
-% Print
+fillPoint([]).
+fillPoint( [P, G] ) :-
+    P is 0,
+    G is 0.
+
+% Print Init
 
 printBoard(B) :-
 	N1 is 1,
 	N2 is 1,
-	write(' '),
 	printBoardTop(B, N1),
-	nl,
+	printBoardLine(B),
 	printBoardAux(B, N2).
 
-printBoardTop([], N).
-printBoardTop([X | Y], N) :-
+% Print Line
+
+printBoardLine(B) :- 
+	write('   '),
+	printBoardLineAux(B),
+	nl.
+
+printBoardLineAux([]).
+printBoardLineAux([X | Y]) :-
+	write('--- '),
+	printBoardLineAux(Y).
+
+% Top
+
+printBoardTop(B, N) :- 
+	write('   '),
+	printBoardTopAux(B, N),
+	nl.
+
+printBoardTopAux([], N).
+printBoardTopAux([X | Y], N) :-
 	write(' '),
 	write(N),
+	write('  '),
 	N1 is N+1,
-	%N is N1+1,
-	printBoardTop(Y, N1).
+	printBoardTopAux(Y, N1).
 
+% Print Main
 
 printBoardAux([], N).
-printBoardAux([H], N) :- 
+printBoardAux([H | T], N) :-
 	write(N),
-	printList(H).
-printBoardAux([X | Y], N) :-
-	write(N),
-	printList(X),
+	printList(H),
 	nl,
+	printBoardLine(H),
 	N1 is N+1,
-	printBoardAux(Y, N1).
-
+	printBoardAux(T, N1).
 
 printList(L) :- 
 	printListAux(L).
 
 printListAux([]).
-printListAux([H]) :- write(' '), write(H).
-printListAux([X | Y]) :-
-   write(' '),
-   write( X ),
-   printListAux(Y).
+printListAux([H]) :-
+	write(' | '),
+	printPoint(H),
+	write(' | ').
+printListAux([H | T]) :-
+	write(' | '),
+	printPoint(H),
+	printListAux(T).
 
-% Play
-
-playSymple :- 
-	write('Choose board size: '),
-	read(S),
-	playSympleAux(S).
-
-playSymple(S) :- 
-	playSympleAux(S).
-
-playSympleAux(S) :-
-	createBoard(B, S),
-	printBoard(B).
-
+printPoint([0 , J]) :-
+   	write('0').
+printPoint([P , J]) :-
+	write(P).
