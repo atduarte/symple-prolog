@@ -80,7 +80,6 @@ printListAux([H | T]) :-
 	write(' | '),
 	printPoint(H),
 	printListAux(T).
-
 printPoint([0 , J]) :-
    	write('0').
 printPoint([P , J]) :-

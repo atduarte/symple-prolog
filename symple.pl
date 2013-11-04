@@ -20,7 +20,9 @@ playSympleAux(S) :-
     R is mod(S,2),
     R = 1,
     createBoard(B, S),
-    printBoard(B).
+    printBoard(B),
+    P is 1,
+    readPlayer(P).
 % Verifies if SIZE < 10
 playSympleAux(S) :- 
     S > 9,
@@ -34,3 +36,34 @@ playSympleAux(S) :-
     write('Choose a odd table size'),
     nl,
     playSymple.
+
+readPlayer(P) :-
+    write('PLAYER '),
+    write(P),
+    write(', Your turn! Choose move type (group/grow): '),
+    read(M),
+    playPlayer(P, M).
+
+playPlayer(P, 'group').
+    % MISSING
+    % pergunta onde vai colocar a peça e tal
+    % verifica se vale
+    % se nao valer volta a ser chamada
+    %checkGameEnded.
+
+playPlayer(P, 'grow').
+    % MISSING
+    % pergunta onde vai colocar a peças recursivamente
+    % verifica se vale
+    % se nao valer volta a ser chamada
+    %checkGameEnded.
+
+% NOT WORKING
+playPlayer(P, M) :-
+    write('Invalid Move'),
+    nl.
+
+%checkGameEnded().
+%
+%endGame().
+
