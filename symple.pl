@@ -27,6 +27,7 @@ playSympleAux(S) :-
     S < 10,
     R is mod(S,2),
     R = 1,
+    write('Creating Board'), nl,
     createBoard(B, S),
     printBoard(B),
     P is 1,
@@ -46,6 +47,7 @@ readPlayer(P, B) :-
     changePlayer(P, P1),
     printBoard(B1),
     readPlayer(P1, B1).
+readPlayer(P, B) :- readPlayer(P, B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -66,7 +68,8 @@ playPlayer(P, B, B1, 'group') :-
     read(C),
     write('Choose line to place group'),
     read(L),
-    placePiece(P, B, B1, C, L).
+    placePiece(P, B, B1, C, L). % Tem de verificar a possibilidade. Retorna false se nao for possivel. Coloca se for
+playPlayer(P, B, B1, 'group') :- playPlayer(P, B, B1, 'group').
 
 playPlayer(P, B, B1, M) :-
     M \= 'group',
