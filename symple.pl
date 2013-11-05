@@ -36,6 +36,10 @@ playSympleAux(S) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Read Player  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 readPlayer(P, B) :-
+    %countGroups(B, GP1, GP2),
+    %write('GP1 '), write(GP1), write(' / GP2 '), write(GP2), nl,
+    %countPieces(B, P1, P2, F),
+    %write('P1 '), write(P1), write(' / P2 '), write(P2), write(' / Free '), write(F), nl,
     checkGameEnd(B),
     write('Game Ended.'), nl.
 readPlayer(P, B) :-
@@ -51,12 +55,14 @@ readPlayer(P, B) :- readPlayer(P, B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-playPlayer(P, B, B1, 'grow').
-    % MISSING
-    % pergunta onde vai colocar a peças recursivamente
-    % verifica se vale
-    % se nao valer volta a ser chamada
-    %checkGameEnded.
+% MISSING
+% pergunta onde vai colocar a peças recursivamente
+% verifica se vale
+% se nao valer volta a ser chamada
+%checkGameEnded,
+playPlayer(P, B, B1, 'grow') :-
+    append(B, [], B1),
+    1 = 1.
 
 playPlayer(P, B, B1, 'group') :-
     % MISSING
