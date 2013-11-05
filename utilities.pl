@@ -14,8 +14,6 @@ placePiece(P, B, B1, C, L) :-
     length( B1, S ),
     placePieceAuxLine(P, B, B1, C, L, 1, 1).
 
-% TODO: Change B1 next to B
-
 placePieceAuxLine(P, [], [], C, L, NL, NC).
 placePieceAuxLine(P, [H|T], [H|T1], C, L, NL, NC) :-
     NL \= L,
@@ -47,7 +45,7 @@ checkGameEnd(B) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Calculate Points  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 calculatePoints(B, P1, P2) :-
-    countSpaces(B, PP1, PP2, PF),
+    countPieces(B, PP1, PP2, PF),
     countGroups(B, PG1, PG2),
     P1 is PP1 - PG1,
     P2 is PP2 - PG2.

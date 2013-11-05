@@ -65,11 +65,6 @@ playPlayer(P, B, B1, 'grow') :-
     1 = 1.
 
 playPlayer(P, B, B1, 'group') :-
-    % MISSING
-    % pergunta onde vai colocar a peça e tal
-    % verifica se vale
-    % se nao valer volta a ser chamada
-    %checkGameEnded.
     write('Choose column to place group: '),
     read(C),
     write('Choose line to place group'),
