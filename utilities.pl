@@ -15,7 +15,7 @@ checkPlace(B, C, L) :-
 checkPlaceAuxL([H|T], C, L, NL) :-
     NL \= L,
     NL1 is NL + 1,
-    checkPlaceAuxL(T, C, L, NL).
+    checkPlaceAuxL(T, C, L, NL1).
 checkPlaceAuxL([H|T], C, L, NL) :-
     NL = L, 
     checkPlaceAuxC(H, C, 1).
@@ -79,7 +79,7 @@ countGroups(B, P1, P2) :-
     length(GP2, P2).
 
 getGroups(B, GP1, GP2) :-
-    countGroupsAuxL(B, [], [], GP1, GP2).
+    getGroupsAuxL(B, [], [], GP1, GP2).
 
 % each line
 getGroupsAuxL([], GP1, GP2, GP1, GP2).
@@ -129,9 +129,8 @@ checkPointPlayer([P|G], P1) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Other  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-appendIfNotDuplicate(L, X, L1) :-
-    member(X, L),
-    append(L, [], L1).
+appendIfNotDuplicate(L, X, L) :-
+    member(X, L).
 appendIfNotDuplicate(L, X, L1) :-
     append(L, [X], L1).
 

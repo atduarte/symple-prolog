@@ -76,8 +76,8 @@ playPlayer(P, B, B1, 'create') :-
     write('Choose line to place group'),
     read(L),
     checkPlace(B, C, L),
+    % TODO Tem de verificar adjacencias
     getNextGroup(B, P, G),
-    % Tem de verificar a possibilidade
     placePiece(P, G, B, B1, C, L).
 playPlayer(P, B, B1, 'create') :-
     write('Invalid position.'), nl,
