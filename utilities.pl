@@ -7,6 +7,27 @@ changePlayer(P, P1) :-
     P = 2,
     P1 is 1.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Check Place  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+checkPlace(B, C, L) :-
+    checkPlaceAuxL(B, C, L, 1).
+
+checkPlaceAuxL([H|T], C, L, NL) :-
+    NL \= L,
+    NL1 is NL + 1,
+    checkPlaceAuxL(T, C, L, NL).
+checkPlaceAuxL([H|T], C, L, NL) :-
+    NL = L, 
+    checkPlaceAuxC(H, C, 1).
+
+checkPlaceAuxC([H|T], C, NC) :-
+    C \= NC,
+    NC1 is NC+1,
+    checkPlaceAuxC(T, C, NC1).
+checkPlaceAuxC([H|T], C, NC) :-
+    C = NC,
+    checkPointPlayer(H, 0).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Place Piece  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 placePiece(P, G, B, B1, C, L) :-

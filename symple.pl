@@ -74,10 +74,14 @@ playPlayer(P, B, B1, 'create') :-
     write('Choose column to place group: '),
     read(C),
     write('Choose line to place group'),
-    read(L),    
+    read(L),
+    checkPlace(B, C, L),
     getNextGroup(B, P, G),
     % Tem de verificar a possibilidade
-    placePiece(P, G, B, B1, C, L). 
+    placePiece(P, G, B, B1, C, L).
+playPlayer(P, B, B1, 'create') :-
+    write('Invalid position.'), nl,
+    false.
 
 
 
