@@ -82,22 +82,22 @@ getGroups(B, GP1, GP2) :-
     countGroupsAuxL(B, [], [], GP1, GP2).
 
 % each line
-countGroupsAuxL([], GP1, GP2, GP1, GP2).
-countGroupsAuxL([H|T], GP1, GP2, GP1F, GP2F) :-
-    countGroupsAuxC(H, GP1, GP2, GP1N, GP2N),
-    countGroupsAuxL(T, GP1N, GP2N, GP1F, GP2F).
+getGroupsAuxL([], GP1, GP2, GP1, GP2).
+getGroupsAuxL([H|T], GP1, GP2, GP1F, GP2F) :-
+    getGroupsAuxC(H, GP1, GP2, GP1N, GP2N),
+    getGroupsAuxL(T, GP1N, GP2N, GP1F, GP2F).
 
 % each column
-countGroupsAuxC([], GP1, GP2, GP1, GP2). 
-countGroupsAuxC([H|T], GP1, GP2, GP1F, GP2F) :-
-    countGroupsAuxP(H, GP1, GP2, GP1N, GP2N),
-    countGroupsAuxC(T, GP1N, GP2N, GP1F, GP2F).
+getGroupsAuxC([], GP1, GP2, GP1, GP2). 
+getGroupsAuxC([H|T], GP1, GP2, GP1F, GP2F) :-
+    getGroupsAuxP(H, GP1, GP2, GP1N, GP2N),
+    getGroupsAuxC(T, GP1N, GP2N, GP1F, GP2F).
 
 % each Point
-countGroupsAuxP([0, G], GP1, GP2, GP1, GP2).
-countGroupsAuxP([1, G], GP1, GP2, GP1F, GP2) :-
+getGroupsAuxP([0, G], GP1, GP2, GP1, GP2).
+getGroupsAuxP([1, G], GP1, GP2, GP1F, GP2) :-
     appendIfNotDuplicate(GP1, G, GP1F).
-countGroupsAuxP([2, G], GP1, GP2, GP1, GP2F) :-
+getGroupsAuxP([2, G], GP1, GP2, GP1, GP2F) :-
     appendIfNotDuplicate(GP2, G, GP2F).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Count Pieces  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
