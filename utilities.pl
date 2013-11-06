@@ -30,35 +30,35 @@ checkPlaceAuxC([H|T], C, NC) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Check Adjacent %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-checkAdjacent(B, C, L, P) :-
+checkNotAdjacent(B, C, L, P) :-
     C1 is C + 1,
     C2 is C - 1,
     L1 is L + 1,
     L2 is L - 1,
-    checkAdjacentAuxL(B, C1, L, P, 1),
-    checkAdjacentAuxL(B, C2, L, P, 1),
-    checkAdjacentAuxL(B, C, L1, P, 1),
-    checkAdjacentAuxL(B, C, L2, P, 1).
+    checkNotAdjacentAuxL(B, C1, L, P, 1),
+    checkNotAdjacentAuxL(B, C2, L, P, 1),
+    checkNotAdjacentAuxL(B, C, L1, P, 1),
+    checkNotAdjacentAuxL(B, C, L2, P, 1).
 
-checkAdjacentAuxL([], C, L, P, NL).
-checkAdjacentAuxL([H|T], C, L, P, NL) :-
+checkNotAdjacentAuxL([], C, L, P, NL).
+checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     L = 0.
-checkAdjacentAuxL([H|T], C, L, P, NL) :-
+checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     C = 0.
-checkAdjacentAuxL([H|T], C, L, P, NL) :-
+checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     NL \= L,
     NL1 is NL + 1,
-    checkAdjacentAuxL(T, C, L, P, NL1).
-checkAdjacentAuxL([H|T], C, L, P, NL) :-
+    checkNotAdjacentAuxL(T, C, L, P, NL1).
+checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     NL = L, 
-    checkAdjacentAuxC(H, C, P, 1).
+    checkNotAdjacentAuxC(H, C, P, 1).
 
-checkAdjacentAuxC([], C, P, NC).
-checkAdjacentAuxC([H|T], C, P, NC) :-
+checkNotAdjacentAuxC([], C, P, NC).
+checkNotAdjacentAuxC([H|T], C, P, NC) :-
     C \= NC,
     NC1 is NC+1,
-    checkAdjacentAuxC(T, C, P, NC1).
-checkAdjacentAuxC([H|T], C, P, NC) :-
+    checkNotAdjacentAuxC(T, C, P, NC1).
+checkNotAdjacentAuxC([H|T], C, P, NC) :-
     C = NC,
     \+ checkPointPlayer(H, P).
 
@@ -171,16 +171,14 @@ appendIfNotDuplicate(L, X, L1) :-
 %%%%%%%%%%%%%%%%%%%%%%  Get Next Group  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 getNextGroup(B, P, G) :-
-    getNextGroupAux(B, P, GP),
+    getPlayerGroups(B, P, GP),
     lastGroup(X, GP),
     G is X+1.
 
-getNextGroupAux(B, 1, GP) :-
-    getGroups(B, GP1, GP2),
-    append(GP1, [], GP).
-getNextGroupAux(B, 2, GP) :-
-    getGroups(B, GP1, GP2),
-    append(GP2, [], GP).
+getPlayerGroups(B, 1, GP) :-
+    getGroups(B, GP, GP2).
+getPlayerGroups(B, 2, GP) :-
+    getGroups(B, GP1, GP).
 
 
 %%%%%%%%%%%%%%%%%%%%% Get Last Group %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,3 +186,62 @@ getNextGroupAux(B, 2, GP) :-
 lastGroup(0,[]).
 lastGroup(X,[X]).
 lastGroup(X,[_|L]) :- lastGroup(X,L).
+
+%%%%%%%%%%%%%%%%%%%%% Get Last Group %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+askPosition(C, L) :-
+    write('Choose column to place'),
+    read(C),
+    write('Choose line to place'),
+    read(L).
+
+%%%%%%%%%%%%%%%%%%%%% Get Adjacent Groups %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+getAdjancentGroups(B, P, C, L, AGP) :-
+    C1 is C + 1,
+    C2 is C - 1,
+    L1 is L + 1,
+    L2 is L - 1,
+    getAdjancentGroupsAuxL(B, P, C1, L, 1, [], AGP0),
+    getAdjancentGroupsAuxL(B, P, C2, L, 1, AGP0, AGP1),
+    getAdjancentGroupsAuxL(B, P, C, L1, 1, AGP1, AGP2),
+    getAdjancentGroupsAuxL(B, P, C, L2, 1, AGP2, AGP),
+    true.
+
+getAdjancentGroupsAuxL([],    P, C, L, NL, AGP, AGP).
+getAdjancentGroupsAuxL([H|T], P, C, L, NL, AGP, AGP) :-
+    C = 0.
+getAdjancentGroupsAuxL([H|T], P, C, L, NL, AGP, AGP) :-
+    L = 0.
+getAdjancentGroupsAuxL([H|T], P, C, L, NL, AGP, AGPF) :-
+    NL \= L,
+    NL1 is NL + 1,
+    getAdjancentGroupsAuxL(T, P, C, L, NL1, AGP, AGPF).
+getAdjancentGroupsAuxL([H|T], P, C, L, NL,  AGP, AGPF) :-
+    NL = L, 
+    getAdjancentGroupsAuxC(H, P, C, 1, AGP, AGPF).
+
+getAdjancentGroupsAuxC([],    P, C, NC, AGP, AGP).
+getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGPF) :-
+    NC \= C,
+    NC1 is NC+1, 
+    getAdjancentGroupsAuxC(T, P, C, NC1, AGP, AGPF).
+getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGPF) :-
+    NC = C,
+    checkPointPlayer(H, P), 
+    getPointGroup(H, G),
+    append(AGP, [G], AGPF).
+getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGP) :-
+    NC = C.
+
+
+%%%%%%%%%%%%%%%%%%%%% Get Point Info %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+getPointPlayer([P,G], P).
+getPointGroup([P,G], G).
+
+myLength([], 0).
+myLength([H|T], S) :-
+    myLength(T, S1),
+    S is 1+S1.
+

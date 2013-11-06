@@ -46,7 +46,7 @@ readPlayer(P, B) :-
 readPlayer(P, B) :-
     write('PLAYER '),
     write(P),
-    write(', Your turn! Choose move type (create/grow): '),
+    write(', Your turn! Choose move type (create/grow)'),
     read(M),
     playPlayer(P, B, B1, M),
     changePlayer(P, P1),
@@ -56,36 +56,75 @@ readPlayer(P, B) :- readPlayer(P, B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% INVALID MOVE
 playPlayer(P, B, B1, M) :-
-    M \= 'group',
-    M \= 'create',
+    M \= 'grow',
+    M \= 'create', 
+    !,
     write('Invalid Move'), nl,
     false.
     
-% MISSING
-% pergunta onde vai colocar a peças recursivamente
-% verifica se vale
-% se nao valer volta a ser chamada
-%checkGameEnded,
+% GROW
 playPlayer(P, B, B1, 'grow') :-
-    append(B, [], B1).
+    getPlayerGroups(B, P, GP),
+    checkGrowGroups(GP),
+    grow(P, B, B1, GP, []).
 
+% CREATE
 playPlayer(P, B, B1, 'create') :-
-    write('Choose column to place group: '),
-    read(C),
-    write('Choose line to place group'),
-    read(L),
+    askPosition(C, L),
     checkPlace(B, C, L),
-    % TODO Tem de verificar adjacencias
+    checkNotAdjacent(B, C, L, P),
     getNextGroup(B, P, G),
     placePiece(P, G, B, B1, C, L).
 playPlayer(P, B, B1, 'create') :-
     write('Invalid position.'), nl,
     false.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Grow  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+checkGrowGroups(GP) :-
+    length(GP, X),
+    X = 0, !,
+    write('Invalid: You dont have groups to grow'), nl,
+    false.
+checkGrowGroups(GP).
 
-%checkGameEnded().
-%
-%endGame().
+% Já expandiu todos
+grow(P, B, B, GP, EGP) :-
+    length(GP, S1),
+    length(EGP, S1).
+grow(P, B, B1, GP, EGP) :-
+    askPosition(C, L),
+    getNextGroup(B, P, G),
+
+    % Verificar se posição está livre
+    checkPlace(B, C, L),
+
+    % Procurar grupos adjacentes
+    getAdjancentGroups(B, P, C, L, AGP),
+    % Verificar que existem grupos adjacentes
+    length(AGP, AGPS),
+    %write('DEBUG AGPS:'), write(AGPS), write(AGP), nl,
+    AGPS > 0,
+
+    %%TODO
+    %% Verificar que grupos adjacentes não foram já expandidos
+    %checkNotExpanded(),
+
+    %%%TODO
+    %%% Mudar todos os pontos dos grupos adjacentes para um novo grupo
+    %%% E mudar lista de grupos
+    %%changeGroup(B, BN, P, GP, GP1, AGP, G),
+
+    % Colocar peça
+    placePiece(P, G, B, BN, C, L),
+
+    % Criar nova lista de grupos expandidos
+    append(EGP, [G], EGP1), 
+    !,
+    grow(P, BN, B1, GP, EGP1). % In the future should be GP1
+grow(P, B, B1, GP, EGP) :-
+    write('Invalid position.'), nl,
+    false.
 
