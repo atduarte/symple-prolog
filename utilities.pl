@@ -28,6 +28,40 @@ checkPlaceAuxC([H|T], C, NC) :-
     C = NC,
     checkPointPlayer(H, 0).
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Check Adjacent %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+checkAdjacent(B, C, L, P) :-
+    C1 is C + 1,
+    C2 is C - 1,
+    L1 is L + 1,
+    L2 is L - 1,
+    checkAdjacentAuxL(B, C1, L, P, 1),
+    checkAdjacentAuxL(B, C2, L, P, 1),
+    checkAdjacentAuxL(B, C, L1, P, 1),
+    checkAdjacentAuxL(B, C, L2, P, 1).
+
+checkAdjacentAuxL([], C, L, P, NL).
+checkAdjacentAuxL([H|T], C, L, P, NL) :-
+    L = 0.
+checkAdjacentAuxL([H|T], C, L, P, NL) :-
+    C = 0.
+checkAdjacentAuxL([H|T], C, L, P, NL) :-
+    NL \= L,
+    NL1 is NL + 1,
+    checkAdjacentAuxL(T, C, L, P, NL1).
+checkAdjacentAuxL([H|T], C, L, P, NL) :-
+    NL = L, 
+    checkAdjacentAuxC(H, C, P, 1).
+
+checkAdjacentAuxC([], C, P, NC).
+checkAdjacentAuxC([H|T], C, P, NC) :-
+    C \= NC,
+    NC1 is NC+1,
+    checkAdjacentAuxC(T, C, P, NC1).
+checkAdjacentAuxC([H|T], C, P, NC) :-
+    C = NC,
+    \+ checkPointPlayer(H, P).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Place Piece  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 placePiece(P, G, B, B1, C, L) :-
