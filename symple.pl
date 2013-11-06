@@ -108,22 +108,23 @@ grow(P, B, B1, GP, EGP) :-
     %write('DEBUG AGPS:'), write(AGPS), write(AGP), nl,
     AGPS > 0,
 
-    %%TODO
-    %% Verificar que grupos adjacentes não foram já expandidos
-    %checkNotExpanded(),
+    % Verificar que grupos adjacentes não foram já expandidos
+    %write('DEGUG: '), write(EGP), write(AGP), nl,
+    checkNotExpanded(EGP, AGP),
 
-    %%%TODO
-    %%% Mudar todos os pontos dos grupos adjacentes para um novo grupo
-    %%% E mudar lista de grupos
-    %%changeGroup(B, BN, P, GP, GP1, AGP, G),
+    % Mudar todos os pontos dos grupos adjacentes para um novo grupo
+    % E mudar lista de grupos
+    changeGroups(B, BN, P, GP, GP1, AGP, G),
 
     % Colocar peça
-    placePiece(P, G, B, BN, C, L),
+    placePiece(P, G, BN, BNN, C, L),
 
     % Criar nova lista de grupos expandidos
     append(EGP, [G], EGP1), 
+    getPlayerGroups(B, P, GP2),
+    write('DEGUG GROUPS: '), write(GP2),nl,
     !,
-    grow(P, BN, B1, GP, EGP1). % In the future should be GP1
+    grow(P, BNN, B1, GP2, EGP1). % In the future should be GP1
 grow(P, B, B1, GP, EGP) :-
     write('Invalid position.'), nl,
     false.

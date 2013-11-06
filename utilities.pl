@@ -65,8 +65,6 @@ checkNotAdjacentAuxC([H|T], C, P, NC) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Place Piece  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 placePiece(P, G, B, B1, C, L) :-
-    length( B, S ),
-    length( B1, S ),
     placePieceAuxLine(P, G, B, B1, C, L, 1, 1).
 
 placePieceAuxLine(P, G, [], [], C, L, NL, NC).
@@ -245,3 +243,29 @@ myLength([H|T], S) :-
     myLength(T, S1),
     S is 1+S1.
 
+checkNotExpanded(EGP, []).
+checkNotExpanded(EGP, [H|T]) :-
+    \+ member(H, EGP),
+    checkNotExpanded(EGP, T).
+
+
+
+changeGroups(B, BF, P, GP, GPF, AGP, G):-
+    changeGroupsAuxL(B, BF, P, AGP, G).
+
+% each line
+changeGroupsAuxL([], [], P, AGP, G).
+changeGroupsAuxL([H|T], [H1|T1], P,  AGP, G) :-
+    changeGroupsAuxC(H, H1, P, AGP, G),
+    changeGroupsAuxL(T, T1, P, AGP, G).
+
+% each column
+changeGroupsAuxC([], [], P, AGP, G).
+changeGroupsAuxC([H|T], [H1|T1], P,  AGP, G) :-
+    changeGroupsAuxP(H, H1, P, AGP, G),
+    changeGroupsAuxC(T, T1, P, AGP, G).
+
+% each Point
+changeGroupsAuxP([P, Y], [P, G], P, AGP, G) :-
+    member(Y, AGP).
+changeGroupsAuxP([X, Y], [X, Y], P, AGP, G).
