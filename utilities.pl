@@ -9,31 +9,31 @@ changePlayer(P, P1) :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Place Piece  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-placePiece(P, B, B1, C, L) :-
+placePiece(P, G, B, B1, C, L) :-
     length( B, S ),
     length( B1, S ),
-    placePieceAuxLine(P, B, B1, C, L, 1, 1).
+    placePieceAuxLine(P, G, B, B1, C, L, 1, 1).
 
-placePieceAuxLine(P, [], [], C, L, NL, NC).
-placePieceAuxLine(P, [H|T], [H|T1], C, L, NL, NC) :-
+placePieceAuxLine(P, G, [], [], C, L, NL, NC).
+placePieceAuxLine(P, G, [H|T], [H|T1], C, L, NL, NC) :-
     NL \= L,
     NL1 is NL + 1,
-    placePieceAuxLine(P, T, T1, C, L, NL1, NC).
-placePieceAuxLine(P, [H|T], [H1|T1], C, L, NL, NC) :-
+    placePieceAuxLine(P, G, T, T1, C, L, NL1, NC).
+placePieceAuxLine(P, G, [H|T], [H1|T1], C, L, NL, NC) :-
     NL = L,
-    placePieceAuxColumn(P, H, H1, C, L, NC, NL),
+    placePieceAuxColumn(P, G, H, H1, C, L, NC, NL),
     NL1 is NL + 1,
-    placePieceAuxLine(P, T, T1, C, L, NL1, NC).
+    placePieceAuxLine(P, G, T, T1, C, L, NL1, NC).
 
-placePieceAuxColumn(P, [], [], C, L, NC, NL).
-placePieceAuxColumn(P, [H|T], [H|T1], C, L, NC, NL) :-
+placePieceAuxColumn(P, G, [], [], C, L, NC, NL).
+placePieceAuxColumn(P, G, [H|T], [H|T1], C, L, NC, NL) :-
     NC \= C,
     NC1 is NC + 1,
-    placePieceAuxColumn(P, T, T1, C, L, NC1, NL).
-placePieceAuxColumn(P, [H|T], [[P,0]|T1], C, L, NC, NL) :-
+    placePieceAuxColumn(P, G, T, T1, C, L, NC1, NL).
+placePieceAuxColumn(P, G, [H|T], [[P,G]|T1], C, L, NC, NL) :-
     NC = C,
     NC1 is NC + 1,
-    placePieceAuxColumn(P, T, T1, C, L, NC1, NL).
+    placePieceAuxColumn(P, G, T, T1, C, L, NC1, NL).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Game End  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -53,9 +53,12 @@ calculatePoints(B, P1, P2) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Count Groups  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 countGroups(B, P1, P2) :-
-    countGroupsAuxL(B, [], [], GP1, GP2),
+    getGroups(B, GP1, GP2),
     length(GP1, P1),
     length(GP2, P2).
+
+getGroups(B, GP1, GP2) :-
+    countGroupsAuxL(B, [], [], GP1, GP2).
 
 % each line
 countGroupsAuxL([], GP1, GP2, GP1, GP2).
@@ -110,3 +113,24 @@ appendIfNotDuplicate(L, X, L1) :-
     append(L, [], L1).
 appendIfNotDuplicate(L, X, L1) :-
     append(L, [X], L1).
+
+%%%%%%%%%%%%%%%%%%%%%%  Get Next Group  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+getNextGroup(B, P, G) :-
+    getNextGroupAux(B, P, GP),
+    lastGroup(X, GP),
+    G is X+1.
+
+getNextGroupAux(B, 1, GP) :-
+    getGroups(B, GP1, GP2),
+    append(GP1, [], GP).
+getNextGroupAux(B, 2, GP) :-
+    getGroups(B, GP1, GP2),
+    append(GP2, [], GP).
+
+
+%%%%%%%%%%%%%%%%%%%%% Get Last Group %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+lastGroup(0,[]).
+lastGroup(X,[X]).
+lastGroup(X,[_|L]) :- lastGroup(X,L).

@@ -31,6 +31,7 @@ playSympleAux(S) :-
     createBoard(B, S),
     printBoard(B),
     P is 1,
+    !,
     readPlayer(P, B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Read Player  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -45,7 +46,7 @@ readPlayer(P, B) :-
 readPlayer(P, B) :-
     write('PLAYER '),
     write(P),
-    write(', Your turn! Choose move type (group/grow): '),
+    write(', Your turn! Choose move type (create/grow): '),
     read(M),
     playPlayer(P, B, B1, M),
     changePlayer(P, P1),
@@ -55,28 +56,30 @@ readPlayer(P, B) :- readPlayer(P, B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+playPlayer(P, B, B1, M) :-
+    M \= 'group',
+    M \= 'create',
+    write('Invalid Move'), nl,
+    false.
+    
 % MISSING
 % pergunta onde vai colocar a peças recursivamente
 % verifica se vale
 % se nao valer volta a ser chamada
 %checkGameEnded,
 playPlayer(P, B, B1, 'grow') :-
-    append(B, [], B1),
-    1 = 1.
+    append(B, [], B1).
 
-playPlayer(P, B, B1, 'group') :-
+playPlayer(P, B, B1, 'create') :-
     write('Choose column to place group: '),
     read(C),
     write('Choose line to place group'),
-    read(L),
-    placePiece(P, B, B1, C, L). % Tem de verificar a possibilidade. Retorna false se nao for possivel. Coloca se for
-playPlayer(P, B, B1, 'group') :- playPlayer(P, B, B1, 'group').
+    read(L),    
+    getNextGroup(B, P, G),
+    % Tem de verificar a possibilidade
+    placePiece(P, G, B, B1, C, L). 
 
-playPlayer(P, B, B1, M) :-
-    M \= 'group',
-    M \= 'grow',
-    write('Invalid Move'), nl,
-    false.
+
 
 %checkGameEnded().
 %
