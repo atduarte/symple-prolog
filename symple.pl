@@ -13,7 +13,7 @@ playInit(S, MD) :-
     printBoard(B),
     P is 1,
     !,
-    playerPlay(B, MD, P).
+    playerPlay(B, MD, P, 0).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%  INIT - Ask Settings  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -37,35 +37,37 @@ askMode(MD) :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Player Play  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Verifica se acabou
-playerPlay(B, MD, P) :-
+playerPlay(B, MD, P, N) :-
     checkGameEnd(B),
     write('Game Ended.'), nl.
 % Se for AI 1
-playerPlay(B, 1, 2) :-
-    aiMove(B, B1, 1, 2),
-    playerPlayEnd(B, 1, 2).
+playerPlay(B, 1, 2, N) :-
+    aiMove(B, B1, 1, 2, N),
+    N1 is N+1,
+    playerPlayEnd(B, 1, 2, N1).
 % Se for AI 2
 playerPlay(B, 2, 2) :-
     aiMove(B, B1, 2, 2),
-    playerPlayEnd(B, 2, 2).
+    N1 is N+1,
+    playerPlayEnd(B, 2, 2, N1).
 % Se for Player 1 - Manual
-playerPlay(B, MD, P) :-
+playerPlay(B, MD, P, N) :-
     P = 1,
     askManualMove(B, B1, P),
-    playerPlayEnd(B1, MD, P).
+    playerPlayEnd(B1, MD, P, N).
 % Se for Player 2 - Manual
-playerPlay(B, MD, P) :-
+playerPlay(B, MD, P, N) :-
     MD = 0,
     P = 2,
     askManualMove(B, B1, P),
-    playerPlayEnd(B1, MD, P).
+    playerPlayEnd(B1, MD, P, N).
 % Repeat
-playerPlay(B, MD, P) :- playerPlay(B, MD, P).
+playerPlay(B, MD, P, N) :- playerPlay(B, MD, P, N).
 
-playerPlayEnd(B, MD, P) :-
+playerPlayEnd(B, MD, P, N) :-
     printBoard(B),
     changePlayer(P, P1),
-    playerPlay(B, MD, P1).
+    playerPlay(B, MD, P1, N).
     
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Manual Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
