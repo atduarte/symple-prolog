@@ -275,8 +275,6 @@ checkNotExpanded(EGP, [H|T]) :-
     \+ member(H, EGP),
     checkNotExpanded(EGP, T).
 
-
-
 changeGroups(B, BF, P, AGP, G):-
     changeGroupsAuxL(B, BF, P, AGP, G).
 
@@ -296,3 +294,19 @@ changeGroupsAuxC([H|T], [H1|T1], P,  AGP, G) :-
 changeGroupsAuxP([P, Y], [P, G], P, AGP, G) :-
     member(Y, AGP).
 changeGroupsAuxP([X, Y], [X, Y], P, AGP, G).
+
+
+selectRandomItem(L, I) :-
+    length(L, S),
+    random(0, S, X),
+    selectItem(L, X, I).
+
+selectItem(B, X, I) :-
+    selectItem(B, X, I, 0).
+selectItem([H|T], X, H, N) :-
+    X = N.
+selectItem([H|T], X, I, N) :-
+    N1 is N+1,
+    selectItem(T, X, I, N1).
+
+

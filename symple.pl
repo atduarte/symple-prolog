@@ -42,14 +42,16 @@ playerPlay(B, MD, P, N) :-
     write('Game Ended.'), nl.
 % Se for AI 1
 playerPlay(B, 1, 2, N) :-
+    write('AI 1'),nl,
     aiMove(B, B1, 1, 2, N),
     N1 is N+1,
-    playerPlayEnd(B, 1, 2, N1).
+    playerPlayEnd(B1, 1, 2, N1).
 % Se for AI 2
-playerPlay(B, 2, 2) :-
-    aiMove(B, B1, 2, 2),
+playerPlay(B, 2, 2, N) :-
+    write('AI 2'),nl,
+    aiMove(B, B1, 2, 2, N),
     N1 is N+1,
-    playerPlayEnd(B, 2, 2, N1).
+    playerPlayEnd(B1, 2, 2, N1).
 % Se for Player 1 - Manual
 playerPlay(B, MD, P, N) :-
     P = 1,
@@ -117,7 +119,8 @@ manualMove(P, B, B1, 'create') :-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+pieceCreate(B, B1, P, [L, C]) :-
+    pieceCreate(B, B1, P, C, L).
 pieceCreate(B, B1, P, C, L) :-
     checkPlace(B, C, L),
     checkNotAdjacent(B, C, L, P),
