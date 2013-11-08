@@ -3,4 +3,5 @@
 :-  consult(utilities),
     consult(board),
     consult(symple),
-    playSymple(5).
+    consult(ai),
+    play(5, 0).

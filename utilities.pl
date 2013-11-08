@@ -1,5 +1,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Change Player  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+checkBoardSize(S) :-
+    S > 9, !,
+    write('Choose a table size smaller than 10'), nl,
+    false.
+checkBoardSize(S) :-
+    R is mod(S,2),
+    R = 0, !,
+    write('Choose a odd table size'),nl,
+    false.
+checkBoardSize(S) :-
+    S < 10,
+    R is mod(S,2),
+    R = 1.
+
+checkMode(M) :-
+    M = 0.
+checkMode(M) :-
+    M = 1.
+checkMode(M) :-
+    M = 2.
+checkMode(M) :-
+    write('Invalid Mode.'),nl,
+    false.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Change Player  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 changePlayer(P, P1) :-
     P = 1,
     P1 is 2.
@@ -250,7 +277,7 @@ checkNotExpanded(EGP, [H|T]) :-
 
 
 
-changeGroups(B, BF, P, GP, GPF, AGP, G):-
+changeGroups(B, BF, P, AGP, G):-
     changeGroupsAuxL(B, BF, P, AGP, G).
 
 % each line
