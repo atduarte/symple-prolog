@@ -12,16 +12,18 @@ aiMove(B, B1, 1, P, N) :-
 
 % Nivel 2
 aiMove(B, B1, 2, P, N) :-
-    N = 0,
+    N > 5,
     aiCreate(B, B1, P).
 aiMove(B, B1, 2, P, N) :-
-    %random(0, 10, X),
-    %X \= 0,
+    random(0, 10, X),
+    X \= 0,
     aiGrow(B, B1, P).
 aiMove(B, B1, 2, P, N) :-
     aiCreate(B, B1, P).
 aiMove(B, B1, 2, P, N) :-
     aiGrow(B, B1, P).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 aiCreate(B, B1, P) :-
     getPossibleCreatePieces(B, P, PL), !,
@@ -30,7 +32,6 @@ aiCreate(B, B1, P) :-
     selectRandomItem(PL, I),
     pieceCreate(B, B1, P, I).
 
-% TODO
 aiGrow(B, B1, P) :-
     aiGrow(B, B1, P, [], 1).
 
@@ -65,7 +66,7 @@ aiGrowAux(B, B1, P, EGP, N, I, PL) :-
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Play  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%   Auxiliars  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 getPossibleCreatePieces(B, P, R) :-
     getPossibleCreatePiecesAuxL(B, P, [], R, 1).
