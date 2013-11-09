@@ -101,8 +101,9 @@ manualGrowAux(B, B, P, GP, EGP) :-
     length(EGP, S1).
 manualGrowAux(B, B1, P, GP, EGP) :-
     askPosition(C, L),
-    pieceGrow(B, BN, P, GP, GP1, EGP, EGP1, C, L),
+    pieceGrow(B, BN, P, EGP, EGP1, C, L),
     !,
+    getPlayerGroups(B, P, GP1),
     manualGrowAux(BN, B1, P, GP1, EGP1).
 manualGrowAux(B, B1, P, GP, EGP) :-
     write('Invalid position.'), nl,
@@ -127,7 +128,9 @@ pieceCreate(B, B1, P, C, L) :-
     getNextGroup(B, P, G), !,
     placePiece(P, G, B, B1, C, L).
 
-pieceGrow(B, B1, P, GP, GP1, EGP, EGP1, C, L) :-
+pieceGrow(B, B1, P, EGP, EGP1, [L, C]) :-
+    pieceGrow(B, B1, P, EGP, EGP1, C, L).
+pieceGrow(B, B1, P, EGP, EGP1, C, L) :-
     % Verificar se posição está livre
     checkPlace(B, C, L), !,
  
@@ -151,8 +154,7 @@ pieceGrow(B, B1, P, GP, GP1, EGP, EGP1, C, L) :-
     placePiece(P, G, BN, B1, C, L),
  
     % Criar nova lista de grupos expandidos
-    append(EGP, [G], EGP1), 
-    getPlayerGroups(B, P, GP1).
+    append(EGP, [G], EGP1).
 
 checkGrow(GP) :-
     length(GP, X),
