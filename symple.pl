@@ -39,7 +39,10 @@ askMode(MD) :-
 % Verifica se acabou
 playerPlay(B, MD, P, N) :-
     checkGameEnd(B),
-    write('Game Ended.'), nl.
+    write('Game Ended.'), nl,
+    countPieces(B, P1, P2, F),
+    write('Player 1: '), write(P1), write(' points.'),nl,
+    write('Player 2: '), write(P2), write(' points.'),nl.
 % Se for AI 1
 playerPlay(B, 1, 2, N) :-
     write('AI 1'),nl,
