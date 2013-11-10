@@ -111,7 +111,7 @@ getPossibleGrowPiecesAuxC([H|T], B, P, EGP, R, RF, L, C) :-
 getPossibleGrowPiecesAuxP([0, 0], B, P, EGP, R, RF, L, C) :-
     checkPointGetPossibleGrowPieces(B, P, C, L, EGP),
     append(R, [[L, C]], RF).
-getPossibleGrowPiecesAuxP([X, Y], B, P, EGP, R, R, L, C).
+getPossibleGrowPiecesAuxP([X, Y], B, P, EGP, R, RF, L, C).
 
 checkPointGetPossibleGrowPieces(B, P, C, L, EGP) :-
     getAdjancentGroups(B, P, C, L, AGP),
