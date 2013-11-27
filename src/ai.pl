@@ -12,7 +12,8 @@ aiMove(B, B1, 1, P, N) :-
 
 % Nivel 2
 aiMove(B, B1, 2, P, N) :-
-    N > 5,
+    length(B, S),
+    N < S,
     aiCreate(B, B1, P).
 aiMove(B, B1, 2, P, N) :-
     random(0, 10, X),
@@ -36,17 +37,21 @@ aiGrow(B, B1, P) :-
     aiGrow(B, B1, P, [], 1).
 
 aiGrow(B, B, P, EGP, N) :-
-    getPlayerGroups(B, P, GP),
-    length(GP, S1),
-    length(EGP, S1),
-    S1 > 0.
+    getExpandableGroups(B, P, GP),
+    checkAllExpanded(EGP, GP).
+    %length(GP, S1),
+    %length(EGP, S2),
+    %S1 = S2,
+    %S1 > 0.
 aiGrow(B, B1, P, EGP, N) :-
-    getPlayerGroups(B, P, GP),
+    getExpandableGroups(B, P, GP), !,
     length(GP, GPS),
     AX1 is GPS - N,
     GPS > 0,
     AX1 >= 0,
     getPossibleGrowPieces(B, P, EGP, PL),
+    length(PL, PLS),
+    PLS > 0, !,
     aiGrowAux(B, B1, P, EGP, N, 0, PL).
 
 aiGrowAux(B, B, P, EGP, N, I, PL) :-
@@ -111,7 +116,7 @@ getPossibleGrowPiecesAuxC([H|T], B, P, EGP, R, RF, L, C) :-
 getPossibleGrowPiecesAuxP([0, 0], B, P, EGP, R, RF, L, C) :-
     checkPointGetPossibleGrowPieces(B, P, C, L, EGP),
     append(R, [[L, C]], RF).
-getPossibleGrowPiecesAuxP([X, Y], B, P, EGP, R, RF, L, C).
+getPossibleGrowPiecesAuxP([X, Y], B, P, EGP, R, R, L, C).
 
 checkPointGetPossibleGrowPieces(B, P, C, L, EGP) :-
     getAdjancentGroups(B, P, C, L, AGP),

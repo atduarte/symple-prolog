@@ -45,7 +45,7 @@ playerPlay(B, MD, P, N) :-
     write('Player 2: '), write(P2), write(' points.'),nl.
 % Se for AI 1
 playerPlay(B, 1, 2, N) :-
-    write('AI 1'),nl,
+    write('AI 1'), write(N), nl,
     aiMove(B, B1, 1, 2, N),
     N1 is N+1,
     playerPlayEnd(B1, 1, 2, N1).
@@ -95,21 +95,35 @@ manualMove(P, B, B1, M) :-
     
 % GROW
 manualMove(P, B, B1, 'grow') :-
-    getPlayerGroups(B, P, GP),
+    getExpandableGroups(B, P, GP), !,
     checkGrow(GP), !,
     manualGrowAux(B, B1, P, GP, []).
 
 manualGrowAux(B, B, P, GP, EGP) :-
-    length(GP, S1),
-    length(EGP, S1).
+    checkAllExpanded(EGP, GP),
+    %length(GP, S1),
+    %length(EGP, S2),
+    %write('S1: '), write(S1), nl,
+    %write('S2: '), write(S2), nl,
+    %S2 >= S1,
+    write('Grow End').
 manualGrowAux(B, B1, P, GP, EGP) :-
+    write('Grow'), write(EGP), nl,
+
+    getExpandableGroups(B, P, GPN),
+    write('Expandable: '), write(GPN), nl,
+    write('Expanded: '), write(EGP), nl,
+
     askPosition(C, L),
-    pieceGrow(B, BN, P, EGP, EGP1, C, L),
-    !,
-    getPlayerGroups(B, P, GP1),
+    pieceGrow(B, BN, P, EGP, EGP1, C, L), !,
+
+    getExpandableGroups(BN, P, GP1),
+    write('Expandable: '), write(GP1), nl,
+    write('Expanded: '), write(EGP1), nl,
+
     manualGrowAux(BN, B1, P, GP1, EGP1).
 manualGrowAux(B, B1, P, GP, EGP) :-
-    write('Invalid position.'), nl,
+    write('Invalid position.'), nl, !,
     false.
     
 

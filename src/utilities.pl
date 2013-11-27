@@ -67,6 +67,50 @@ checkNotAdjacent(B, C, L, P) :-
     checkNotAdjacentAuxL(B, C, L1, P, 1),
     checkNotAdjacentAuxL(B, C, L2, P, 1).
 
+checkAdjacentFreeSpace(B, C, L) :-
+    C1 is C + 1,
+    getPoint(B, C1, L, X),
+    checkPointPlayer(X, 0).
+checkAdjacentFreeSpace(B, C, L) :-
+    C2 is C - 1,
+    getPoint(B, C2, L, X),
+    checkPointPlayer(X, 0).
+checkAdjacentFreeSpace(B, C, L) :-
+    L1 is L + 1,
+    getPoint(B, C, L1, X),
+    checkPointPlayer(X, 0).
+checkAdjacentFreeSpace(B, C, L) :-
+    L2 is L - 1,
+    getPoint(B, C, L2, X),
+    checkPointPlayer(X, 0).
+
+getPoint(B, C, L, X) :-
+    getPointL(B, C, L, X, 1).
+
+getPointL([], C, L, [-1, -1], NL).
+getPointL([H|T], C, L, [-1, -1], NL) :-
+    L = 0, !.
+getPointL([H|T], C, L, [-1, -1], NL) :-
+    C = 0, !.
+getPointL([H|T], C, L, X, NL) :-
+    NL \= L,
+    NL1 is NL + 1,
+    getPointL(T, C, L, X, NL1).
+getPointL([H|T], C, L, X, NL) :-
+    NL = L, 
+    getPointC(H, C, X, 1).
+
+getPointC([], C, [-1, -1], NC).
+getPointC([H|T], C, X, NC) :-
+    C \= NC,
+    NC1 is NC+1,
+    getPointC(T, C, X, NC1).
+getPointC([H | T], C, X, NC) :-
+    C = NC,
+    getPointP(H, X).
+
+getPointP([P, G], [P, G]).
+
 checkNotAdjacentAuxL([], C, L, P, NL).
 checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     L = 0.
@@ -159,6 +203,37 @@ getGroupsAuxP([1, G], GP1, GP2, GP1F, GP2) :-
 getGroupsAuxP([2, G], GP1, GP2, GP1, GP2F) :-
     appendIfNotDuplicate(GP2, G, GP2F).
 
+
+getExpandableGroups(B, 1, GP) :-
+    getExpandableGroupsAuxL(B, B, [], [], GP, GP2, 1).
+getExpandableGroups(B, 2, GP) :-
+    getExpandableGroupsAuxL(B, B, [], [], GP1, GP, 1).
+
+% each line
+getExpandableGroupsAuxL([], OB, GP1, GP2, GP1, GP2, L).
+getExpandableGroupsAuxL([H|T], OB, GP1, GP2, GP1F, GP2F, L) :-
+    getExpandableGroupsAuxC(H, OB, GP1, GP2, GP1N, GP2N, L, 1),
+    L1 is L+1,
+    getExpandableGroupsAuxL(T, OB, GP1N, GP2N, GP1F, GP2F, L1).
+
+% each column
+getExpandableGroupsAuxC([], OB, GP1, GP2, GP1, GP2, L, C). 
+getExpandableGroupsAuxC([H|T], OB, GP1, GP2, GP1F, GP2F, L, C) :-
+    getExpandableGroupsAuxP(H, OB, GP1, GP2, GP1N, GP2N, L, C),
+    C1 is C+1,
+    getExpandableGroupsAuxC(T, OB, GP1N, GP2N, GP1F, GP2F, L, C1).
+
+% each Point
+getExpandableGroupsAuxP([1, G], OB, GP1, GP2, GP1F, GP2, L, C) :-
+    checkExpandableGroupsPoint(OB, C, L, AGP, G, GP1, GP1F), !.
+getExpandableGroupsAuxP([2, G], OB, GP1, GP2, GP1, GP2F, L, C) :-
+    checkExpandableGroupsPoint(OB, C, L, AGP, G, GP2, GP2F), !.
+getExpandableGroupsAuxP([P, G], OB, GP1, GP2, GP1, GP2, L, C) :- !.
+
+checkExpandableGroupsPoint(B, C, L, AGP, G, GP, GPF) :-
+    checkAdjacentFreeSpace(B, C, L),
+    appendIfNotDuplicate(GP, G, GPF).
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Count Pieces  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 countPieces([], 0, 0, 0).
@@ -183,7 +258,7 @@ countPiecesAux([H|T], P1, P2, F) :-
     countPiecesAux(T, P1, P2T, F),
     P2 is 1+P2T.
 
-checkPointPlayer([P|G], P1) :-
+checkPointPlayer([P, G], P1) :-
     P = P1.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%  Other  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -209,8 +284,14 @@ getPlayerGroups(B, 2, GP) :-
 %%%%%%%%%%%%%%%%%%%%% Get Last Group %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 lastGroup(0,[]).
-lastGroup(X,[X]).
-lastGroup(X,[_|L]) :- lastGroup(X,L).
+lastGroup(X,L) :- lastGroup(X,L,0).
+
+lastGroup(M, [], M).
+lastGroup(X, [H|T], M) :-
+    H > M,
+    lastGroup(X, T, H).
+lastGroup(X, [H|T], M) :-
+    lastGroup(X, T, M).
 
 %%%%%%%%%%%%%%%%%%%%% Get Last Group %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -274,6 +355,11 @@ checkNotExpanded(EGP, []).
 checkNotExpanded(EGP, [H|T]) :-
     \+ member(H, EGP),
     checkNotExpanded(EGP, T).
+
+checkAllExpanded(GP, []).
+checkAllExpanded(GP, [H|T]) :-
+    member(H, GP),
+    checkAllExpanded(GP, T).
 
 changeGroups(B, BF, P, AGP, G):-
     changeGroupsAuxL(B, BF, P, AGP, G).
