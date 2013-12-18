@@ -1,8 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Includes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 :-  use_module(library(random)),
+    use_module(library(sockets)),
     consult(utilities),
     consult(board),
     consult(symple),
-    consult(ai),
-    play.
+    consult(sockets),
+    consult(ai).
