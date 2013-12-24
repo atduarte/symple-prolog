@@ -1,11 +1,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%  Init Play Symple  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-play :- 
+play :-
     askBoardSize(S),
     askMode(MD),
     playInit(S, MD).
 
-play(S, MD) :- 
+play(S, MD) :-
     playInit(S, MD).
 
 playInit(S, MD) :-
@@ -73,7 +73,7 @@ playerPlayEnd(B, MD, P, N) :-
     printBoard(B),
     changePlayer(P, P1),
     playerPlay(B, MD, P1, N).
-    
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%   Manual Moves  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -88,11 +88,11 @@ askManualMove(B, B1, P) :- askManualMove(B, B1, P).
 % INVALID MOVE
 manualMove(P, B, B1, M) :-
     M \= 'grow',
-    M \= 'create', 
+    M \= 'create',
     !,
     write('Invalid Move'), nl,
     false.
-    
+
 % GROW
 manualMove(P, B, B1, 'grow') :-
     getExpandableGroups(B, P, GP), !,
@@ -125,7 +125,7 @@ manualGrowAux(B, B1, P, GP, EGP) :-
 manualGrowAux(B, B1, P, GP, EGP) :-
     write('Invalid position.'), nl, !,
     false.
-    
+
 
 % CREATE
 manualMove(P, B, B1, 'create') :-
@@ -140,9 +140,13 @@ manualMove(P, B, B1, 'create') :-
 pieceCreate(B, B1, P, [L, C]) :-
     pieceCreate(B, B1, P, C, L).
 pieceCreate(B, B1, P, C, L) :-
+    write('Cenas'),write(B),nl,
     checkPlace(B, C, L),
+    write('Cenas'),nl,
     checkNotAdjacent(B, C, L, P),
+    write('Cenas'),nl,
     getNextGroup(B, P, G), !,
+    write('Cenas'),nl,
     placePiece(P, G, B, B1, C, L).
 
 pieceGrow(B, B1, P, EGP, EGP1, [L, C]) :-
@@ -150,26 +154,26 @@ pieceGrow(B, B1, P, EGP, EGP1, [L, C]) :-
 pieceGrow(B, B1, P, EGP, EGP1, C, L) :-
     % Verificar se posição está livre
     checkPlace(B, C, L), !,
- 
+
     % Procurar grupos adjacentes
     getAdjancentGroups(B, P, C, L, AGP),
     % Verificar que existem grupos adjacentes
     length(AGP, AGPS),
     %write('DEBUG AGPS:'), write(AGPS), write(AGP), nl,
     AGPS > 0, !,
- 
+
     % Verificar que grupos adjacentes não foram já expandidos
     %write('DEGUG: '), write(EGP), write(AGP), nl,
     checkNotExpanded(EGP, AGP), !,
- 
+
     % Mudar todos os pontos dos grupos adjacentes para um novo grupo
     % E mudar lista de grupos
     getNextGroup(B, P, G),
     changeGroups(B, BN, P, AGP, G),
- 
+
     % Colocar peça
     placePiece(P, G, BN, B1, C, L),
- 
+
     % Criar nova lista de grupos expandidos
     append(EGP, [G], EGP1).
 

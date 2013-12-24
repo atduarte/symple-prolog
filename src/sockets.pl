@@ -25,7 +25,7 @@ server_loop(Stream) :-
     (ClientRequest == bye; ClientRequest == end_of_file), !.
 
 
-server_input([create, Board, Player, [Column, Row] ], [NBoard]) :-
+server_input([create, Board, Player, Column, Row ], [NBoard]) :-
     pieceCreate(Board, NBoard, Player, Column, Row),!.
 server_input([create, Board, Player, Column, Row], 0) :- !.
 
@@ -46,7 +46,7 @@ server_input([playAi, Board, Player, Level, PlayCount], [NBoard]) :-
 server_input([playAi, Board, Player, Level, PlayCount], 0) :- !.
 
 
-server_input([checkGameEnd, Board], 1)
+server_input([checkGameEnd, Board], 1) :-
     checkGameEnd(Board), !.
 server_input([checkGameEnd, Board], 0) :- !.
 
