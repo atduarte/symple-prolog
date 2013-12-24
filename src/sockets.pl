@@ -41,9 +41,9 @@ server_input([grow, Board, Player, Points], [NBoard]) :-
 server_input([grow, Board, Player, Points], 0) :- !.
 
 
-server_input([playAi, Board, Player, Level, PlayCount], [NBoard]) :-
-    aiMove(Board, NBoard, Level, Player, N),!.
-server_input([playAi, Board, Player, Level, PlayCount], 0) :- !.
+server_input([playAi, Board, Player, Level], [NBoard]) :-
+    aiMove(Board, NBoard, Level, Player, 1),!.
+server_input([playAi, Board, Player, Level], 0) :- !.
 
 
 server_input([checkGameEnd, Board], 1) :-
