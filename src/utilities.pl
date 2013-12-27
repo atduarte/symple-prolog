@@ -44,7 +44,7 @@ checkPlaceAuxL([H|T], C, L, NL) :-
     NL1 is NL + 1,
     checkPlaceAuxL(T, C, L, NL1).
 checkPlaceAuxL([H|T], C, L, NL) :-
-    NL = L, 
+    NL = L,
     checkPlaceAuxC(H, C, 1).
 
 checkPlaceAuxC([H|T], C, NC) :-
@@ -97,7 +97,7 @@ getPointL([H|T], C, L, X, NL) :-
     NL1 is NL + 1,
     getPointL(T, C, L, X, NL1).
 getPointL([H|T], C, L, X, NL) :-
-    NL = L, 
+    NL = L,
     getPointC(H, C, X, 1).
 
 getPointC([], C, [-1, -1], NC).
@@ -121,7 +121,7 @@ checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
     NL1 is NL + 1,
     checkNotAdjacentAuxL(T, C, L, P, NL1).
 checkNotAdjacentAuxL([H|T], C, L, P, NL) :-
-    NL = L, 
+    NL = L,
     checkNotAdjacentAuxC(H, C, P, 1).
 
 checkNotAdjacentAuxC([], C, P, NC).
@@ -171,6 +171,8 @@ checkGameEnd(B) :-
 calculatePoints(B, P1, P2) :-
     countPieces(B, PP1, PP2, PF),
     countGroups(B, PG1, PG2),
+    write('-'), write(PP1),nl,
+    write('-'), write(PP2),nl,
     P1 is PP1 - PG1,
     P2 is PP2 - PG2.
 
@@ -191,7 +193,7 @@ getGroupsAuxL([H|T], GP1, GP2, GP1F, GP2F) :-
     getGroupsAuxL(T, GP1N, GP2N, GP1F, GP2F).
 
 % each column
-getGroupsAuxC([], GP1, GP2, GP1, GP2). 
+getGroupsAuxC([], GP1, GP2, GP1, GP2).
 getGroupsAuxC([H|T], GP1, GP2, GP1F, GP2F) :-
     getGroupsAuxP(H, GP1, GP2, GP1N, GP2N),
     getGroupsAuxC(T, GP1N, GP2N, GP1F, GP2F).
@@ -217,7 +219,7 @@ getExpandableGroupsAuxL([H|T], OB, GP1, GP2, GP1F, GP2F, L) :-
     getExpandableGroupsAuxL(T, OB, GP1N, GP2N, GP1F, GP2F, L1).
 
 % each column
-getExpandableGroupsAuxC([], OB, GP1, GP2, GP1, GP2, L, C). 
+getExpandableGroupsAuxC([], OB, GP1, GP2, GP1, GP2, L, C).
 getExpandableGroupsAuxC([H|T], OB, GP1, GP2, GP1F, GP2F, L, C) :-
     getExpandableGroupsAuxP(H, OB, GP1, GP2, GP1N, GP2N, L, C),
     C1 is C+1,
@@ -324,17 +326,17 @@ getAdjancentGroupsAuxL([H|T], P, C, L, NL, AGP, AGPF) :-
     NL1 is NL + 1,
     getAdjancentGroupsAuxL(T, P, C, L, NL1, AGP, AGPF).
 getAdjancentGroupsAuxL([H|T], P, C, L, NL,  AGP, AGPF) :-
-    NL = L, 
+    NL = L,
     getAdjancentGroupsAuxC(H, P, C, 1, AGP, AGPF).
 
 getAdjancentGroupsAuxC([],    P, C, NC, AGP, AGP).
 getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGPF) :-
     NC \= C,
-    NC1 is NC+1, 
+    NC1 is NC+1,
     getAdjancentGroupsAuxC(T, P, C, NC1, AGP, AGPF).
 getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGPF) :-
     NC = C,
-    checkPointPlayer(H, P), 
+    checkPointPlayer(H, P),
     getPointGroup(H, G),
     append(AGP, [G], AGPF).
 getAdjancentGroupsAuxC([H|T], P, C, NC, AGP, AGP) :-

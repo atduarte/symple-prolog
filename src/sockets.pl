@@ -45,6 +45,9 @@ server_input([playAi, Board, Player, Level], [NBoard]) :-
     aiMove(Board, NBoard, Level, Player, 1),!.
 server_input([playAi, Board, Player, Level], 0) :- !.
 
+server_input([getPontuations, Board], [P1, P2]) :-
+    calculatePoints(Board, P1, P2), !.
+server_input([getPontuations, Board], 0) :- !.
 
 server_input([checkGameEnd, Board], 1) :-
     checkGameEnd(Board), !.

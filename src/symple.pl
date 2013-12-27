@@ -140,13 +140,9 @@ manualMove(P, B, B1, 'create') :-
 pieceCreate(B, B1, P, [L, C]) :-
     pieceCreate(B, B1, P, C, L).
 pieceCreate(B, B1, P, C, L) :-
-    write('Cenas'),write(B),nl,
     checkPlace(B, C, L),
-    write('Cenas'),nl,
     checkNotAdjacent(B, C, L, P),
-    write('Cenas'),nl,
     getNextGroup(B, P, G), !,
-    write('Cenas'),nl,
     placePiece(P, G, B, B1, C, L).
 
 pieceGrow(B, B1, P, EGP, EGP1, [L, C]) :-

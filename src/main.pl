@@ -7,3 +7,6 @@
     consult(symple),
     consult(sockets),
     consult(ai).
+
+user:runtime_entry(start) :-
+    server.
